@@ -1,0 +1,39 @@
+1. Face‑powered attendance:-
+The system uses facial recognition so a student is marked present just by standing in front of the
+camera—no ID cards or manual roll call.
+
+2. Automatic date, time and status:-
+Every attendance entry automatically stores the exact date and time and marks the student as
+ “On Time” or “Late” based on the class start time.
+
+3. Smart campus radius control:-
+Attendance can only be marked when the user is inside the allowed campus area radius,
+so students cannot mark attendance from home or outside college.
+
+4. Single login, multiple roles:-
+One clean login page works for students, teachers and admins, and after login each user
+sees only the options and dashboard meant for their role.
+
+5. Live camera preview:-
+A live camera window shows the student’s face in real time, helping them stand at the correct
+distance and angle before the system confirms attendance.
+
+6. One record per student per day:-
+Even if the same student comes in front of the camera many times, only one attendance entry is stored
+for that date, keeping the database clean and accurate.
+
+7. Easy student enrollment:-
+New students can be registered quickly with name, token number and face capture; their face encoding
+is saved once and reused for all future classes.
+
+8. Secure password and reset flow:-
+User passwords are stored in encrypted form, and a “Forgot Password” feature lets students reset their
+password safely without exposing their old one.
+
+9. Powerful attendance reports:-
+Teachers and admins can instantly download attendance in CSV or Excel format, making it easy to
+see present/absent lists and use the data in reports.
+
+10. Modern and user‑friendly interface:-
+A clean home page, clear headings and a single main Login button give the system a professional
+look and make it simple for first‑time users to understand.

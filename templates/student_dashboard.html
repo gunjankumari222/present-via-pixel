@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Admin Dashboard | NTTF College</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background:floralwhite;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(0, 0, 0, 0.9);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 60px;
+    }
+    .navbar-brand img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    .navbar-brand span {
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 60px; /* below navbar */
+      left: 0;
+      width: 230px;
+      height: calc(100vh - 65px);
+      background: linear-gradient(180deg, #001f4d, #004aad);
+      color: white;
+      padding-top: 20px;
+      box-shadow: 3px 0 8px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .sidebar ul li {
+      padding: 13px 25px;
+      border-left: 4px solid transparent;
+      transition: all 0.3s;
+    }
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      gap: 10px;
+    }
+    .sidebar ul li:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-left: 4px solid #fff;
+    }
+
+    /* Main content */
+    .main-content {
+      margin-left: 230px;
+      padding: 90px 40px 40px 40px;
+    }
+
+    /* Cards */
+    .stats-card {
+      text-align: center;
+      padding: 25px;
+      color: #fff;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .stats-card h6 {
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+    .stats-card h2 {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    /* Table */
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+    .card-header {
+      border-top-left-radius: 12px !important;
+      border-top-right-radius: 12px !important;
+    }
+    .table thead {
+      background-color: #004aad;
+      color: white;
+    }
+     footer {
+      background: rgba(0, 0, 0, 0.9);
+      color: #ccc;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 0.9rem;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 45px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark px-3 d-flex justify-content-between align-items-center">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+      <span>NETTUR TECHNICAL TRAINING FOUNDATION</span>
+    </a>
+    <span class="text-white fw-semibold">🎓 STUDENT</span>
+  </nav>
+
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <ul>
+      <li><a href="{{ url_for('live_attendance') }}" class="btn btn-success mt-3">Mark Attendance</a></li>
+      <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container-fluid">
+      <p class="text-center text-muted">Overview of today's attendance and student performance metrics.</p>
+
+      <!-- Stats Cards -->
+      <div class="row g-4 mt-3">
+        <div class="col-md-3">
+          <div class="stats-card bg-primary">
+            <h6>Total Students</h6>
+            <h2>{{ total_students }}</h2>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stats-card bg-success">
+            <h6>Present Today</h6>
+            <h2>{{ present_today }}</h2>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stats-card bg-danger">
+            <h6>Absent Today</h6>
+            <h2>{{ absent_today }}</h2>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stats-card bg-warning text-dark">
+            <h6>Average Attendance (%)</h6>
+            <h2>{{ average_percentage }}%</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Section -->
+      <div class="card mt-5">
+        <div class="card-header bg-primary text-white fw-semibold">
+          📅 Present Students - {{ current_date }}
+        </div>
+        <div class="card-body">
+          {% if present_students %}
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Token No</th>
+                <th>Name</th>
+                <th>Time In</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for s in present_students %}
+              <tr>
+                <td>{{ s['token_no'] }}</td>
+                <td>{{ s['name'] }}</td>
+                <td>{{ s['time'] }}</td>
+                <td><span class="badge bg-success">Present</span></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="text-muted text-center mb-0">No students marked present today.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+ <footer>
+  © 2025 NTTF College — Present via Pixel
+  </footer>
+</body>
+</html>

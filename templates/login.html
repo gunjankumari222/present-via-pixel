@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Login | FaceAttendance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #0056b3;
+      --accent-color: #ffc107;
+      --text-dark: #343a40;
+      --light-bg: #f4f7f9;
+    }
+    body {
+      background-color: var(--light-bg);
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-dark);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.5s;
+    }
+    .navbar, footer {
+      background: rgba(0, 0, 0, 0.9);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      position: fixed;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    .navbar { top: 0; height: 65px; }
+    .navbar-brand img { height: 40px; margin-right: 10px; }
+    .navbar-brand span {
+      font-weight: 500;
+      font-size: 1.15rem;
+      letter-spacing: 0.8px;
+      color: #fff;
+    }
+    .back-btn {
+      position: absolute;
+      top: 80px;
+      left: 24px;
+      z-index: 1201;
+    }
+    @media (max-width: 480px) {
+      .back-btn { top: 68px; left: 10px; font-size: 1.15rem; padding: 4px 13px !important; }
+    }
+    .center-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 90px 20px 60px;
+    }
+    .login-card {
+      background: #ffffff;
+      border-radius: 18px;
+      color: var(--text-dark);
+      padding: 38px 52px 36px 52px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+      border: 1px solid #e0e0e0;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    }
+    .login-card:hover {
+      transform: translateY(-5px) scale(1.015);
+      box-shadow: 0 18px 54px rgba(0, 86, 179, 0.16);
+    }
+    .login-card h3 {
+      text-align: center;
+      margin-bottom: 18px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--primary-blue);
+      font-size: 2rem;
+      text-shadow: 0 2px 8px rgba(0,86,179,0.07);
+    }
+    .form-label {
+      font-weight: 600;
+      color: #495057;
+      font-size: 1rem;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .mb-3 { margin-bottom: 1.2rem !important; }
+    .mb-4 { margin-bottom: 1.7rem !important; }
+    .form-control {
+      background: #f4f7f9;
+      border: none;
+      border-bottom: 2px solid #ced4da;
+      color: var(--text-dark);
+      padding: 12px 0 10px 0;
+      border-radius: 3px 3px 0 0;
+      transition: all 0.3s;
+    }
+    .form-control:focus {
+      border-color: var(--primary-blue);
+      box-shadow: none;
+      background: #fff;
+    }
+    .form-control::placeholder {
+      color: #b0b0b0;
+      font-size: 1rem;
+    }
+    .btn-login {
+      background: linear-gradient(90deg, var(--primary-blue) 90%, #1887ff 100%);
+      border: none;
+      font-weight: 700;
+      padding: 13px 0;
+      font-size: 1.05rem;
+      border-radius: 10px;
+      transition: background 0.3s, transform 0.2s;
+      letter-spacing: 1.5px;
+      box-shadow: 0 4px 18px rgba(0, 86, 179, 0.14);
+      text-transform: uppercase;
+    }
+    .btn-login:hover {
+      background: #004085;
+      transform: translateY(-2px) scale(1.025);
+      box-shadow: 0 8px 28px rgba(0, 86, 179, 0.18);
+    }
+    .forgot-link {
+      color: #6c757d;
+      font-size: 0.94rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      font-weight: 600;
+    }
+    .forgot-link:hover { color: var(--accent-color); text-decoration: underline; }
+    .toast-container {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 1055;
+    }
+    .toast {
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      border-radius: 10px;
+      padding: 14px 23px;
+      margin-bottom: 10px;
+      font-size: 1.04rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+      animation: fadeInOut 4s forwards;
+      opacity: 0;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(100%); }
+      10% { opacity: 1; transform: translateX(0); }
+      90% { opacity: 1; transform: translateX(0); }
+      100% { opacity: 0; transform: translateX(100%); }
+    }
+    .toast.success { background-color: #28a745; }
+    .toast.error { background-color: #dc3545; }
+    footer {
+      bottom: 0;
+      height: 45px;
+      color: #fff;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-dark px-4 d-flex justify-content-between align-items-center">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="rounded">
+      <span>NETTUR TECHNICAL TRAINING FOUNDATION</span>
+    </a>
+    <a href="/logout" class="btn btn-outline-light ms-auto">Logout</a>
+  </nav>
+
+  <div class="center-container">
+    <div class="login-card">
+      <div class="text-center mb-3">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="54" class="rounded" style="margin-bottom:3px;">
+        <h3>Login</h3>
+      </div>
+
+      <form method="POST" action="/login" autocomplete="off">
+        <div class="mb-3">
+          <label class="form-label">USERNAME</label>
+          <input type="text"
+                 name="username"
+                 id="username"
+                 class="form-control"
+                 placeholder="Enter your username"
+                 autocomplete="off"
+                 autocapitalize="none"
+                 spellcheck="false"
+                 required>
+        </div>
+        <div class="mb-4">
+          <label class="form-label">PASSWORD</label>
+          <input type="password"
+                 name="password"
+                 id="password"
+                 class="form-control"
+                 placeholder="Enter your password"
+                 autocomplete="new-password"
+                 required>
+        </div>
+        <button type="submit" class="btn btn-login w-100">LOGIN</button>
+        <p class="text-center mt-3 d-flex justify-content-around">
+          <a href="/register_user" class="forgot-link">New Registration</a>
+          <a href="/forgot_password" class="forgot-link">Forgot Password</a>
+        </p>
+      </form>
+
+      <div id="flash-messages" style="display:none;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, msg in messages %}
+              <div data-cat="{{ category }}" data-msg="{{ msg }}"></div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script>
+    // page load होते ही fields clear
+    window.addEventListener('load', () => {
+      const u = document.getElementById('username');
+      const p = document.getElementById('password');
+      if (u) u.value = '';
+      if (p) p.value = '';
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const hiddenDivs = document.querySelectorAll("#flash-messages div");
+      hiddenDivs.forEach(div => {
+        const msg = div.getAttribute("data-msg");
+        const cat = div.getAttribute("data-cat");
+        showToast(msg, cat);
+      });
+    });
+
+    function showToast(message, category) {
+      const toast = document.createElement("div");
+      const toastClass = category === 'success' ? 'success' : 'error';
+      toast.classList.add("toast", toastClass);
+      toast.innerText = message;
+      document.getElementById("toast-container").appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 500);
+      }, 3500);
+    }
+  </script>
+
+  <footer>
+    © 2025 NTTF College — Present via Pixel
+  </footer>
+</body>
+</html>

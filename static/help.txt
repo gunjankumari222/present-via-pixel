@@ -1,0 +1,36 @@
+Open the portal:-
+Open the Present via Pixel website from any browser.
+
+Click on Login:-
+Use the main “Login” button on the home page to go to the login screen.
+
+Select your role:-
+On the login page, choose your role as Student, Teacher or Admin and enter your username and password.
+
+For first‑time users:-
+If you are a new user and do not have a login, contact the system administrator to create your account
+and register your face.
+
+Student face registration:-
+During registration, stand in front of the camera as instructed so that the system can capture your
+face and save your face encoding.
+
+Marking attendance:-
+For daily attendance, log in as a student and stand in front of the camera. Wait until your name
+appears or a success message is shown.
+
+Location / area radius:-
+Make sure you are inside the allowed college area. If you are outside the campus radius, the system
+will not allow you to mark attendance.
+
+Checking your status:-
+After attendance is marked, you can view your status (On‑Time or Late) and the time in your student dashboard.
+
+Forgot password:-
+If you forget your password, use the “Forgot Password” option on the login page, enter your username
+and token number, and follow the steps to reset it.
+
+Getting support:-
+If the camera does not detect your face, your name is wrong, or attendance is not appearing,
+inform your teacher or the admin so they can check your registration and system logs.
+

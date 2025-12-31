@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration | NTTF</title>
+  <style>
+    /* SAME EXACT CSS */
+    :root {
+      --primary-navy: #003366;
+      --text-dark: #34495e;
+      --capture-blue: #007bff;
+    }
+    body { font-family: "Poppins", sans-serif; margin: 0; background: linear-gradient(135deg, #eaf2f8 0%, #d5e6f1 100%); color: var(--text-dark); height: 100vh; display: flex; flex-direction: column; justify-content: space-between; align-items: center; overflow: hidden; }
+    .navbar { background: rgba(0, 0, 0, 0.9); color: #fff; display: flex; align-items: center; justify-content: flex-start; width: 100%; padding: 10px 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); position: fixed; top: 0; left: 0; z-index: 100; }
+    .navbar img { height: 45px; margin-right: 10px; }
+    .navbar h1 { font-size: 18px; font-weight: 600; letter-spacing: 0.5px; }
+    .main { flex: 1; display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 70px; margin-bottom: 50px; }
+    .container { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); width: 360px; padding: 20px 25px; border-radius: 18px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); border: 1px solid #e0e0e0; transition: all 0.3s ease-in-out; text-align: center; }
+    .container:hover { transform: scale(1.02); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); }
+    h2 { color: var(--primary-navy); font-size: 20px; font-weight: 700; margin-bottom: 15px; }
+    label { font-weight: 500; display: block; margin-top: 10px; font-size: 0.9rem; color: var(--text-dark); text-align: left; }
+    input[type="text"] { width: 100%; padding: 10px; margin-top: 4px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; background: #ffffff; color: var(--text-dark); transition: all 0.3s; }
+    input[type="text"]:focus { border-color: var(--capture-blue); box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3); outline: none; }
+    video { width: 100%; height: 160px; border-radius: 10px; border: 1px solid #ccc; margin-top: 10px; background: white; }
+    .btn-group { display: flex; justify-content: space-between; margin-top: 15px; gap: 8px; }
+    button { flex: 1; padding: 8px 0; border: none; border-radius: 10px; font-size: 14px; cursor: pointer; color: #fff; font-weight: 600; transition: 0.3s ease; text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    #startBtn { background-color: #004d99; } #startBtn:hover { background-color: #003366; }
+    #captureBtn { background-color: #1e8c3a; } #captureBtn:hover { background-color: #1a7532; }
+    #submitBtn { background-color: #d98200; } #submitBtn:hover { background-color: #b36b00; } #submitBtn:disabled { background-color: #ccc; cursor: not-allowed; }
+    footer { background: rgba(0, 0, 0, 0.9); color: #ccc; text-align: center; padding: 10px 0; font-size: 0.9rem; width: 100%; position: fixed; bottom: 0; left: 0; height: 28px; border-top: 1px solid rgba(255,255,255,0.1); }
+    @media (max-width: 480px) { .container { width: 90%; } }
+
+    /* FLASH MESSAGES */
+    .flash-message { margin-bottom: 15px; padding: 12px; border-radius: 8px; font-size: 0.9rem; text-align: left; animation: slideIn 0.3s ease; }
+    .flash-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .flash-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <span onclick="window.history.back();" style="cursor:pointer; font-size:1.6rem; color:#fff; margin-right:18px; font-weight:700; line-height:1; display:inline-block;">&larr;</span>
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    <h1>NETTUR TECHNICAL TRAINING FOUNDATION</h1>
+  </div>
+  <div class="main">
+    <div class="container">
+      <h2>Register New Student</h2>
+
+      <!-- ✅ FLASH MESSAGES - Only show register-related messages -->
+     {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {% if category in ['success', 'error'] %}
+        <div class="flash-message {{ 'flash-success' if category == 'success' else 'flash-error' }}">
+          {{ message }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+      <form id="registerForm" method="POST" enctype="multipart/form-data" action="/register">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="token_no">Token No (Unique ID):</label>
+        <input type="text" id="token_no" name="token_no" required>
+        <label>Face Capture:</label>
+        <input type="file" id="photoInput" name="photo" style="display:none;">
+        <video id="camera" autoplay muted></video>
+        <div class="btn-group">
+          <button type="button" id="startBtn">🎥 START</button>
+          <button type="button" id="captureBtn" disabled>📸 CAPTURE</button>
+          <button type="submit" id="submitBtn" disabled>✅ REGISTER</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <footer>© 2025 NTTF College — Present via Pixel</footer>
+
+  <script>
+    // ✅ AUTO CLEAR FLASH MESSAGES AFTER 5 SECONDS
+    setTimeout(() => {
+      const flashes = document.querySelectorAll('.flash-message');
+      flashes.forEach(flash => {
+        flash.style.transition = 'opacity 0.5s';
+        flash.style.opacity = '0';
+        setTimeout(() => flash.remove(), 500);
+      });
+    }, 5000);
+
+    const video = document.getElementById('camera');
+    const canvas = document.createElement('canvas');
+    const photoInput = document.getElementById('photoInput');
+    const captureBtn = document.getElementById('captureBtn');
+    const startBtn = document.getElementById('startBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const nameInput = document.getElementById('name');
+    const tokenInput = document.getElementById('token_no');
+
+    let stream = null;
+
+    function checkFormReady() {
+      const nameOk = nameInput.value.trim().length > 0;
+      const tokenOk = tokenInput.value.trim().length > 0;
+      const photoOk = photoInput.files.length > 0;
+      submitBtn.disabled = !(nameOk && tokenOk && photoOk);
+    }
+    nameInput.oninput = checkFormReady;
+    tokenInput.oninput = checkFormReady;
+
+    startBtn.onclick = async () => {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        startBtn.textContent = '⏹️ STOP';
+        startBtn.onclick = stopCamera;
+        captureBtn.disabled = false;
+      } catch (err) {
+        alert("❌ Camera access denied!");
+      }
+    };
+
+    function stopCamera() {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        video.srcObject = null;
+      }
+      startBtn.textContent = '🎥 START';
+      startBtn.onclick = startBtn.onclick;
+      captureBtn.disabled = true;
+      photoInput.value = '';
+      checkFormReady();
+    }
+
+    captureBtn.onclick = () => {
+      if (!video.srcObject) return alert("❌ Start camera first!");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+      canvas.toBlob(blob => {
+        const file = new File([blob], "capture.jpg", { type: "image/jpeg" });
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        photoInput.files = dt.files;
+        checkFormReady();
+        alert("✅ Face captured!");
+      }, 'image/jpeg');
+    };
+  </script>
+</body>
+</html>

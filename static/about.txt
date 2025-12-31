@@ -1,0 +1,50 @@
+
+Present via Pixel (face recognition attendance system)
+
+
+Overview:-
+
+Present via Pixel is a face recognition–based attendance system developed for NTTF College.
+It replaces traditional roll calls with a smart, camera‑based solution that records every presence digitally
+and in real time.
+
+
+Purpose:-
+
+The main purpose of this project is to automate classroom attendance, reduce paperwork, and prevent proxy attendance.
+By using facial recognition, the system ensures that only the actual student standing in front of the camera is
+marked present.
+
+
+Key Features:-
+
+Face recognition–based attendance marking
+
+Automatic date, time and status (On‑Time / Late)
+
+Separate dashboards for students, teachers and admins
+
+Attendance history and daily summary view
+
+Export of attendance data to CSV and Excel formats
+
+
+How It Works:-
+
+Students and teachers first log in securely to the web portal using their credentials.
+When a student stands in front of the camera, the system compares the live face with stored encodings and,
+on a successful match, marks attendance with timestamp and status.
+
+
+Technology Stack:-
+
+This project is built using Python, Flask and SQLite on the backend.
+OpenCV and the face_recognition library are used for image processing, while HTML, CSS, Bootstrap and
+JavaScript handle the user interface.
+
+
+Benefits for NTTF:-
+
+Present via Pixel helps NTTF move towards a paperless and digital attendance process.
+It saves classroom time, improves accuracy of attendance records, and gives faculty quick access to
+reports for academic and administrative purposes.
