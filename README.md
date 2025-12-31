@@ -149,3 +149,9 @@ python app.py
 ### Step 4: Open Browser
 Visit:
 http://127.0.0.1:5000
+
+
+## 📄 Project Report
+
+The complete project report (PDF) is available here:  
+[Click to view Project Report](documentation/Project_Report.pdf)
